@@ -6,8 +6,8 @@
 # for more formats, search for ORACLE FORMAT MASKS DATES
 
 SELECT
-  TO_DATE(sh.filedati,'YYYY-MM-DD') AS file_dt,
-  TO_DATE(sh.batch_date,'YYYY-MM') AS batch_dt,
-  TO_DATE(sh.last_updated,'YYYY-MM-DD HH24:MI:SS') AS last_updated, 
+  TO_DATE(sh.somedate1,'YYYY-MM-DD') AS somedate1,
+  TO_DATE(sh.somedate2,'YYYY-MM') AS somedate2,
+  TO_DATE(sh.somedate3,'YYYY-MM-DD HH24:MI:SS') AS somedate3, 
 FROM 
   some_model 
