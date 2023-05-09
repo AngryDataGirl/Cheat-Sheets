@@ -1,0 +1,38 @@
+# column manipulation
+
+## add a column to your table 
+```sql
+ALTER TABLE my_table ADD (new_col DATE);
+```
+
+## modify old column value  
+Set this new column's value to hold the old_column's value converted to a DATE value.
+```sql
+UPDATE my_table SET new_col=TO_DATE(old_col,'MM/DD/YYYY');
+``` 
+Update format mask as needed. 
+
+## drop the old column.
+```sql
+ALTER TABLE my_table DROP (old_col);
+```
+
+## rename new column to old column 
+```sql
+ALTER TABLE my_table RENAME new_col TO old_col;
+``` 
+
+
+# example of some TO_DATE conversions
+<br/>for more formats, search for ORACLE FORMAT MASKS DATES
+<br/>Changing a string / varchar to date in Oracle, first instinct was to cast -- but why does cast not work ? 
+<br/>SQL Error: ORA-01861: literal does not match format string 01861
+	<br/>  this error occurs because the nls portion of TO_DATE( string1 [, format_mask] [, nls_language] ) does not match the string you are trying to convert 
+```sql
+SELECT
+  TO_DATE(sh.somedate1,'YYYY-MM-DD') AS somedate1,
+  TO_DATE(sh.somedate2,'YYYY-MM') AS somedate2,
+  TO_DATE(sh.somedate3,'YYYY-MM-DD HH24:MI:SS') AS somedate3, 
+FROM 
+  some_model 
+```
