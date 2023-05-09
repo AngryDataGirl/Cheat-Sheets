@@ -21,7 +21,9 @@ git commit -m "insert commit message here"
 git push -u origin <branch_name>
 ``` 
 
-# merging in master to your branch 
+# merging in your work 
+
+## merging in master to your branch 
 where <branch_name> is the branch you want to merge into master <br /> 
 this flow assumes there are no conflicts with master <br /> 
 ```
@@ -34,15 +36,7 @@ git add .
 git commit -m "insert comment here"
 git push -u origin <branch_name>
 ```
-
-# deleting a branch 
--D to force delete 
-```
-git branch -d <branch_name>
-git branch -D <branch_name>
-```
-
-# Using git fetch to Fetch Changes Then Merge Using Commit Hash
+## Using git fetch to Fetch Changes Then Merge Using Commit Hash
 
 fetch latest changes to repo <br /> 
 check log to find hash for commit <br /> 
@@ -52,4 +46,25 @@ git fetch remote <branch_name>
 git log
 git merge <commit_hash>
 
+```
+
+# deleting a branch 
+-D to force delete 
+```
+git branch -d <branch_name>
+git branch -D <branch_name>
+```
+# Reversing git actions 
+
+## Undo `git add` for uncommitted changes with:
+```
+git reset <file>
+
+```
+That will remove the file from the current index (the "about to be committed" list) without changing anything else.
+
+## To unstage all changes for all files:
+
+```
+git reset
 ```
