@@ -6,7 +6,7 @@ look up documentation on ORACLE for GRANT
 begin
     for x in (select * from all_tables where owner = 'username')
     loop
-        execute immediate 'grant create any view'||x.owner||'.'|| x.table_name || ' to ' || 'username';
+        execute immediate 'GRANT SELECT ON '||x.owner||'.'|| x.table_name || ' to ' || 'username';
     end loop;
 end;
 ```
