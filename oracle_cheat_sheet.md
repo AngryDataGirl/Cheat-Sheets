@@ -36,3 +36,20 @@ SELECT
 FROM 
   some_model 
 ```
+
+# indexes
+
+## view all existing indexes
+```sql
+SELECT * 
+FROM all_indexes
+-- WHERE owner = 'user'
+```
+## creating indexes
+```sql
+create index <index_name> on <table_name> ( <column1>, <column2>, … );
+```
+## dropping indexes
+```sql
+DROP INDEX [schema_name.]index_name;
+```
