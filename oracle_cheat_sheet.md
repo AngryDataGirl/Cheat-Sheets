@@ -1,4 +1,11 @@
-# column manipulation
+# Table of contents
+1. [Columns](#columns)
+1. [Dates](#dates)
+2. [Indexes](#indexes)
+    1. [Sub paragraph](#subparagraph1)
+3. [Another paragraph](#paragraph2)
+
+# Columns (add, modify, drop, rename) <a name = "columns"></a>
 
 ## add a column to your table 
 ```sql
@@ -23,7 +30,9 @@ ALTER TABLE my_table RENAME new_col TO old_col;
 ``` 
 
 
-# example of some TO_DATE conversions
+# dates <a name = "dates"></a>
+
+## TO_DATE and format mask 
 <br/>for more formats, search for ORACLE FORMAT MASKS DATES
 <br/>Changing a string / varchar to date in Oracle, first instinct was to cast -- but why does cast not work ? 
 <br/>SQL Error: ORA-01861: literal does not match format string 01861
@@ -37,7 +46,7 @@ FROM
   some_model 
 ```
 
-# indexes
+# indexes <a name = "indexes"></a>
 
 ## view all existing indexes
 ```sql
@@ -53,3 +62,18 @@ create index <index_name> on <table_name> ( <column1>, <column2>, … );
 ```sql
 DROP INDEX [schema_name.]index_name;
 ```
+
+## drop index if it exists
+```sql
+DECLARE index_count INTEGER;
+BEGIN
+SELECT COUNT(*) INTO index_count
+    FROM USER_INDEXES
+    WHERE INDEX_NAME = 'index_name';
+
+IF index_count > 0 THEN
+    EXECUTE IMMEDIATE 'DROP INDEX index_name';
+END IF;
+END;
+```
+
