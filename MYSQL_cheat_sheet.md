@@ -1,3 +1,12 @@
+# Table of contents
+1. [Columns](#columns)
+1. [Dates](#dates)
+2. [Indexes](#indexes)
+    1. [Sub paragraph](#subparagraph1)
+3. [Another paragraph](#paragraph2)
+
+# Columns (add, modify, drop, rename) <a name = "columns"></a>
+
 # Create foreign key on existing table 
 
 ```sql
