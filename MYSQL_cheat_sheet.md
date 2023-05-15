@@ -10,3 +10,8 @@ FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
 ALTER TABLE Orders
 ADD FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
 ```
+
+# Turn off safe update mode
+```sql
+SET SQL_SAFE_UPDATES = 0;
+```
