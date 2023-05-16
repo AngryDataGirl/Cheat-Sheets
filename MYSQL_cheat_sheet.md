@@ -62,18 +62,6 @@ ALTER TABLE TableName
 RENAME COLUMN OldColumnName TO NewColumnName;
 ```
 
-# ALTER TABLE - ADD Column
-
-To add a column in a table, use the following syntax:
-
-ALTER TABLE *table_name*ADD *column_name datatype*;
-
-The following SQL adds an "Email" column to the "Customers" table:
-
-# Example
-
-ALTER TABLE CustomersADD Email varchar(255);
-
 # Create foreign key on existing table  <a name = "createfk"></a>
 
 ```sql
