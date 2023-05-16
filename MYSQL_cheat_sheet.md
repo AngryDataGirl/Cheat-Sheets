@@ -1,3 +1,7 @@
+# Contents
+The cheat sheet contains helpful references to different commands you might need to work with an MySQL database. 
+Items related to querying data will be in a query page (not the cheat sheet).
+
 # Table of contents
 1. [Create](#create)
 1. [Update](#update)
