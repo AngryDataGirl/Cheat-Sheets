@@ -3,14 +3,48 @@ The cheat sheet contains helpful references to different commands you might need
 Items related to querying data will be in a query page (not the cheat sheet).
 
 # Table of contents
-1. [Create](#create)
-1. [Update](#update)
-3. [Delete](#delete)
+1. [Creating Tables](#createtable)
+2. [Creating Foreign Key on Existing Table](#createfk)
+3. [Update](#update)
+	1. [Toggling safe update mode](#safemode)
+5. [Delete](#delete)
+# Creating Tables <a name = "createtable"></a>
 
-# Columns (add, modify, drop, rename) <a name = "columns"></a>
+## Create table by copying all columns from another table**
+```sql
+CREATE TABLE new_table
+  AS (SELECT * FROM old_table);
+```
+## **Create Table by copying selected columns from another table**
+```sql
+CREATE TABLE new_table
+  AS (SELECT column_1, column2, ... column_n
+      FROM old_table);
+```
+## **Create Table by copying selected columns from multiple tables**
+```sql
+CREATE TABLE new_table
+  AS (SELECT column_1, column2, ... column_n
+      FROM old_table_1, old_table_2, ... old_table_n);
+```
+## Create a table from another table without copying any of the values 
+```sql 
+CREATE TABLE new_table
+  AS (SELECT *
+      FROM old_table WHERE 1=2);
+```
 
-# Create <a name = "create"></a>
-## Create foreign key on existing table 
+# Columns (add, modify, drop, rename) 
+
+## Add a colum to a table
+
+## Modify a column in a table
+
+## Drop a column in a table
+
+## Rename a column 
+
+# Create foreign key on existing table  <a name = "createfk"></a>
 
 ```sql
 ALTER TABLE Orders
@@ -23,15 +57,14 @@ ALTER TABLE Orders
 ADD FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
 ```
 
-# Update <a name = "update"></a>
-## Toggle safe update mode
+# Toggle safe update mode <a name = "safemode"></a>
 In action queries such as UPDATE or DELETE in MySQL Workbench (this is a workbench issue apparently, not MySQL itself), 
 <br/>sometimes you will run into the following error and are not able to update or delete records in a table. 
 <br/>This is likely caused by the default safe mode in MySQL. 
 
 <b>Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column.</b>
 
-<br/>MySQL is trying to avoid accidental sweeping update/delete. 
+MySQL is trying to avoid accidental sweeping update/delete. 
 <br/>The error will persists even when you do have WHERE clause in your query.
 
 <b>To fix the problem, turn OFF the safe mode:</b>
@@ -39,7 +72,7 @@ In action queries such as UPDATE or DELETE in MySQL Workbench (this is a workben
 ```sql
 <b>SET SQL_SAFE_UPDATES = 0;</b>
 ```
-## turn ON the safe mode:
+<b>turn ON the safe mode:</b>
 
 ```sql
 SET SQL_SAFE_UPDATES=1;
