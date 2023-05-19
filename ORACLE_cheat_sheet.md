@@ -126,10 +126,18 @@ begin
 end;
 ```
 ## privilege levels  
+no comma needed around username! 
 
 ### granting object privileges to a role
 ```sql
 GRANT SELECT ON tablename TO username;
+```
+
+### granting object privileges WITH GRANT OPTION
+- When receiving error ORA-01720: grant option does not exist for 'table_name'
+
+```sql
+GRANT SELECT ON schema.table_name TO username WITH GRANT OPTION;
 ```
 
 ### granting create view to a role 
