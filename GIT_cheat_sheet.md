@@ -10,6 +10,9 @@ list all remote branches
 git branch -r 
 ```
 ## creating branches
+```
+git checkout -b [your new branch name here] 
+```
 
 ## checking branches
 
