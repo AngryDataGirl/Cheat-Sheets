@@ -10,3 +10,28 @@ https://support.sas.com/documentation/cdl/en/lrcon/62955/HTML/default/viewer.htm
 
 - TYPE 1 is numeric 
 - TYPE 2 is character
+
+
+## cast char to numeric
+
+The INPUT function is used to convert the character values in CharacterColumn to numeric values. The BEST12. format is used to define the desired numeric format for the output. You can adjust the format according to your specific requirements.
+
+```sas
+PROC SQL;
+   CREATE TABLE NewTable AS
+   SELECT INPUT(CharacterColumn, BEST12.) AS NumericColumn
+   FROM YourTable;
+QUIT;
+```
+- YourTable is the name of the table containing the character column you want to cast
+- CharacterColumn is the name of the character column you want to convert
+- NumericColumn is the name you want to give to the resulting numeric column in the new table NewTable.
+
+### other formats
+
+- BEST.: This format automatically determines the best width for the numeric variable based on the input data.
+- COMMA.: This format adds commas to represent thousands separators in the numeric values.
+- DOLLAR.: This format adds a dollar sign ($) and commas to represent thousands separators in the numeric values.
+- MMDDYY.: This format converts character values in the format 'MMDDYY' to SAS date values.
+- DATEw.: This format converts character values in the format 'YYYY-MM-DD' to SAS date values, where 'w' represents the width of the output.
+- TIMEw.: This format converts character values in the format 'HH:MM:SS' to SAS time values, where 'w' represents the width of the output.
