@@ -5,6 +5,8 @@
 3. [Indexes](#indexes)
     1. [Sub paragraph](#subparagraph1)
 4. [Grant](#grant)
+5. [Datatypes](#datatypes)
+6. [Strings](#strings)
 
 # Columns (add, modify, drop, rename) <a name = "columns"></a>
 
@@ -144,4 +146,32 @@ GRANT SELECT ON schema.table_name TO username WITH GRANT OPTION;
 ```
 GRANT CREATE ANY VIEW TO username;
 ```
+# Datatypes <a name = "datatypes"></a>
 
+## datatype codes
+https://docs.oracle.com/cd/A58617_01/server.804/a58234/datatype.htm
+
+| Internal Oracle Datatype| Maximum Internal Length | Datatype Code |
+| ----|----|----|
+|VARCHAR2  |4000 bytes  |1  |
+|NUMBER    |21 bytes    |2 |
+|DATE    |7 bytes    |12   |
+|CHAR  |2000 bytes  |96  |
+|RAW  |2000 bytes |23|  
+  
+# Strings <a name = "strings"></a>
+
+## susbtring
+
+```sql
+SUBSTR( str, start_position [, substring_length, [, occurrence ]] );
+```
+The SUBSTR() function accepts three arguments:
+- str: STR that you want to extract the substring from. The data type of str can be CHAR, VARCHAR2, NCHAR, NVARCHAR2, CLOB, or NCLOB.
+- start_position: INT that determines where the substring starts.
+	- 0, substring will start at first character of the str.
+ 	- start_position is positive, the SUBSTR() function will count from the beginning of the str.
+	- start_position is negative, then the SUBSTR() function will count backward from the end of the str .
+- substring_length: the number of characters in the substring.
+	- If omitted, the SUBSTR() function returns all characters starting from the start_position.
+ 	- In case the substring_length is less than 1, the SUBSTR() function returns null.
