@@ -1,4 +1,19 @@
-print all variables from a library & their data types, data length, data format
+## grouping by a column to get max and formatting a column 
+
+```SAS
+proc sql;
+	CREATE TABLE table_name AS  
+	SELECT 
+		column_name1,
+		max(column_name2) as new_column_name2 format=datetime120.
+	FROM table_name
+	GROUP BY column_name1;
+quit;
+```
+
+
+
+## print all variables from a library & their data types, data length, data format
 
 ```SAS
 proc contents data=mylib._all_ noprint out=contents;
