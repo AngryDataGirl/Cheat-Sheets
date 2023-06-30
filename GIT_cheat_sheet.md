@@ -20,6 +20,24 @@ git checkout -branch_name
 ```
 where branch name is the name of the branch you want to checkout (get the name of the branch by listing all branches above)
 
+# basic actions
+
+## add files / stage files for commit 
+adds everything
+```
+git add . 
+```
+adds files that are not staged for commit (ignores untracked)
+```
+add -u
+```
+Though, your .gitignore should prevent the untracked (and ignored) files from being shown in status, added using git add etc. 
+
+## commit files 
+```
+git commit -m "[insert commit message here]"
+```
+
 # basic workflow examples
 ## simple commit and push upstream
 Scenario:
