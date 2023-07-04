@@ -1,12 +1,27 @@
 # Table of contents
-1. [Columns](#columns)
-1. [Dates](#dates)
+1. [Drop Tables](#drop)
+2. [Columns](#columns)
+3. [Dates](#dates)
     1. [Format Mask](#dateformatmask)
-3. [Indexes](#indexes)
+4. [Indexes](#indexes)
     1. [Sub paragraph](#subparagraph1)
-4. [Grant](#grant)
-5. [Datatypes](#datatypes)
-6. [Strings](#strings)
+5. [Grant](#grant)
+6. [Datatypes](#datatypes)
+7. [Strings](#strings)
+
+# Drop multiple tables fitting certain condition (PL/SQL for loop DROP EXECUTE) <a name = "drop"></a>
+```sql
+BEGIN
+  FOR x IN
+    (
+    SELECT
+    object_name FROM all_objects WHERE owner = 'owner_name' AND object_name LIKE '%string%'
+    ) 
+    LOOP 
+        EXECUTE immediate 'DROP TABLE  '||x.object_name; 
+    END LOOP;
+END;
+```
 
 # Columns (add, modify, drop, rename) <a name = "columns"></a>
 
