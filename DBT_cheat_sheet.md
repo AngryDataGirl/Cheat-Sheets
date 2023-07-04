@@ -95,21 +95,21 @@ Really good tutorial on Jinja: [https://ttl255.com/jinja2-tutorial-part-2-loops-
 
 ### the macro 
 ```sql
-{% macro check_if_column_exists(model) %}
+{% macro check_if_column_exists(column_name, model) %}
 
  SELECT CASE WHEN count(*) = 0 THEN 'FALSE' ELSE 'TRUE' END AS column_existence
     FROM (
         SELECT column_name, table_name FROM USER_TAB_COLUMNS
         WHERE 
-            table_name = {{ model }} #this variable is submitted by the schema when the test is called 
-            AND column_name = 'check_this_column'
+            table_name = {{ model }}
+            AND column_name = {{ column_name }}
             )
 
 {% endmacro %}
 ```
 ### the if statement in the test 
 ```sql
-{% if check_if_column_exists('model') == 'TRUE' %} #calling the macro
+{% if check_if_column_exists('column_name','model') == 'TRUE' %} #calling the macro
 
 SELECT *    
 FROM {{ model }} #this is the same model variable 
