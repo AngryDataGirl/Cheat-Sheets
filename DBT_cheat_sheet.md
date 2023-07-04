@@ -63,7 +63,9 @@ This will not apply if you do not also add a config line on the singular model t
 {{ config(warn_if = '>=1') }}
 ```
 
-### example structure of dbt generic test using jinja control flow (if/then)
+# DBT macros + jinja (+ and testing) 
+
+## example structure of dbt generic test using jinja control flow (if/then)
 Official Documentation on Jinja and Macros: [https://docs.getdbt.com/docs/build/jinja-macros]
 Really good tutorial on Jinja: [https://ttl255.com/jinja2-tutorial-part-2-loops-and-conditionals/]
 
@@ -82,3 +84,43 @@ Really good tutorial on Jinja: [https://ttl255.com/jinja2-tutorial-part-2-loops-
 
 {% endtest %}
 ```
+## What if the if statement depends on a dynamic model?
+- ie, you want to feed it a variable that may change in the jinja
+- there migh be a smarter way to make sure it compiles & without a macro, but I thought it would be good to have the sql query run as a macro, where it is super simple to sub in the variable that will change
+- then call that macro in the if statement
+- note that in this example the changing variable was 'model' and 'model' is also one of the default arguments for a custom generic test
+- the if statement required a sql statement, where I am checking if the column exists on a particular table
+- this would also be used on other tables, which is why I need to sub in the {{model}}
+- this documentation was important to know why it was running into compile errors (and more difficult to have the query pasted into the {{if block}} of the jinja statement [https://docs.getdbt.com/docs/building-a-dbt-project/dont-nest-your-curlies]
+
+### the macro 
+```sql
+{% macro check_if_column_exists(model) %}
+
+ SELECT CASE WHEN count(*) = 0 THEN 'FALSE' ELSE 'TRUE' END AS column_existence
+    FROM (
+        SELECT column_name, table_name FROM USER_TAB_COLUMNS
+        WHERE 
+            table_name = {{ model }} #this variable is submitted by the schema when the test is called 
+            AND column_name = 'check_this_column'
+            )
+
+{% endmacro %}
+```
+### the if statement in the test 
+```sql
+{% if check_if_column_exists('model') == 'TRUE' %} #calling the macro
+
+SELECT *    
+FROM {{ model }} #this is the same model variable 
+WHERE ...
+{% else %}
+
+SELECT * 
+FROM {{ model }}
+WHERE ...
+
+{% endif %}
+
+{% endtest %}
+``` 
