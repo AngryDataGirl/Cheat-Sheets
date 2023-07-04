@@ -2,6 +2,26 @@
 
 ## selec specific models 
 
+# config inheritance
+
+## general config inheritance
+- Official Documentation : [https://docs.getdbt.com/reference/configs-and-properties#config-inheritance]
+  - dbt prioritizes configurations in order of <b>specificity</b>, from most specificity to least specificity.
+  - This generally follows the order above: an in-file config() block --> properties defined in a .yml file --> config defined in the project file.
+
+## test configs inheritance
+- Generic tests work a little differently when it comes to specificity. See test configs : [https://docs.getdbt.com/reference/test-configs]
+  - Test configs are applied <b>hierarchically</b>:
+    1. Properties within .yml definition (generic tests only, see test properties for full syntax)
+    2. A config() block within the test's SQL definition
+    3. In dbt_project.yml
+- Examples: 
+  - In the case of a singular test, the config() block within the SQL definition takes precedence over configs in the project file.
+  - In the case of a specific instance of a generic test:
+    1. test's .yml properties 
+    2. values set in its generic SQL definition's config()
+    3. values set in dbt_project.yml.
+
 # DBT tests
 
 ## test severity configs 
@@ -19,8 +39,8 @@ Note that each of these configs need to be wrapped in their own config {{}} like
 {{ config(warn_if = '>=1') }}
 ```
 
-### project level
-Note that I found if you config the test severity on the project level that 
+### project level test severity 
+
 ```yaml
 tests:
   +severity: warn  # all tests
@@ -30,7 +50,7 @@ tests:
 ```
 
 ### test severity on OOB generic model
-however I found taht this actually works for the custom generic tests as well and that the example of the custom generic actually does not work
+however I found that this actually works for the custom generic tests as well and that the example of the custom generic actually does not work
 
 ```yml
 models:
