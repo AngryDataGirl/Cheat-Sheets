@@ -104,6 +104,48 @@ Really good tutorial on Jinja: [https://ttl255.com/jinja2-tutorial-part-2-loops-
 
 {% endtest %}
 ```
+- actually this might not work since the run-query will return a table, and you are evaluating it against a single value
+- the below code returns proper flow / results
+
+```sql
+
+{% set test_query %}
+
+SELECT count(*)
+FROM
+(
+SELECT *
+WHERE 
+    table_name = 'table_name'
+    AND column_name = 'column_name'
+)   
+
+{% endset %}
+
+{% set results = run_query(test_query) %}
+
+{% if execute %}
+{# Return the first column #}
+{% set results_list = results.columns[0].values() %}
+{% else %}
+{% set results_list = [] %}
+{% endif %}
+
+{{ print(results) }}
+{{ print(results_list[0]) }}
+
+{% if results_list[0] != 0 %}
+
+SELECT 'not equal to zero' as x FROM dual
+
+{% else %}
+
+SELECT 'zero' as x FROM dual
+
+{% endif %}
+
+```
+
 ## What if the if statement depends on a dynamic model?
 - ie, you want to feed it a variable that may change in the jinja
 - there migh be a smarter way to make sure it compiles & without a macro, but I thought it would be good to have the sql query run as a macro, where it is super simple to sub in the variable that will change
