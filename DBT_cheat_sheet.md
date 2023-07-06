@@ -145,6 +145,29 @@ SELECT 'zero' as x FROM dual
 {% endif %}
 
 ```
+- you also want to take note of '' and "  ''  "
+- in the example below, I have a generic test where I am passing in the model to the test-query -- which we will run and return a count
+- if you don't set your quotations properly, the model might still run, but you will not get the intended results bc the if / then flow statement is not triggering as the comparison is empty
+
+```sql
+{% test test_column_null_values(model, column_name, date_column) %}
+
+{{ config(severity = 'warn') }}
+
+{% set test_query %}
+
+SELECT count(*)
+FROM
+(
+SELECT column_name, table_name FROM USER_TAB_COLUMNS
+WHERE 
+    table_name = "'{{ model }}'"
+    AND column_name = "'column_name'"
+)   
+
+{% endset %}
+
+```
 
 ## What if the if statement depends on a dynamic model?
 - ie, you want to feed it a variable that may change in the jinja
