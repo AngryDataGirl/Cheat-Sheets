@@ -8,6 +8,21 @@
 -- {{ print(results_list[0]) }}
 ```
 
+# accessing models or context items through the graph node
+https://docs.getdbt.com/reference/dbt-jinja-functions/graph#:~:text=The%20graph%20context%20variable%20is%20a%20dictionary%20which,node%20ids%20onto%20dictionary%20representations%20of%20those%20nodes.
+
+```sql
+{% if execute %}
+  {% for node in graph.nodes.values()
+     | selectattr("resource_type", "equalto", "model")
+     | selectattr("package_name", "equalto", "snowplow") %}
+  
+    {% do log(node.unique_id ~ ", materialized: " ~ node.config.materialized, info=true) %}
+  
+  {% endfor %}
+{% endif %}
+```
+
 # config inheritance
 
 ## general config inheritance
