@@ -2,6 +2,12 @@
 
 ## selec specific models 
 
+## printing 
+```sql
+-- {{ print(results) }}
+-- {{ print(results_list[0]) }}
+```
+
 # config inheritance
 
 ## general config inheritance
