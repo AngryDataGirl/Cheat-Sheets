@@ -222,7 +222,7 @@ FROM
 (
 SELECT column_name, table_name FROM USER_TAB_COLUMNS
 WHERE 
-    table_name = '{{ model.name }}' -- WHY IS IT PASSING AWENG ???
+    table_name = '{{ model.name }}'
     AND column_name = 'EMP_STAT_ID'
 )   
 
