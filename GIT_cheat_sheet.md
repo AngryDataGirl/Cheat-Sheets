@@ -38,6 +38,20 @@ Though, your .gitignore should prevent the untracked (and ignored) files from be
 git commit -m "[insert commit message here]"
 ```
 
+## undo the commit you just did 
+```
+git reset --soft HEAD~1
+git restore --staged [filename]
+```
+
+# instead of .gitignore -- just exclude for yourself
+```
+cd .git
+cd info
+
+update it in that file 
+```
+
 # basic workflow examples
 ## simple commit and push upstream
 Scenario:
