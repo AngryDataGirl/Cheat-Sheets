@@ -50,7 +50,7 @@ tests:
 ```
 
 ### test severity on OOB generic model
-however I found that this actually works for the custom generic tests as well and that the example of the custom generic actually does not work
+However I found that this actually works for the custom generic tests as well and that the example of the custom generic actually does not work
 
 ```yml
 models:
@@ -66,12 +66,11 @@ models:
 ```
 
 ### test severity on singular model
-While it is sorta implied in the contextual text before the examples, 
-Note that in the offical documentation the singular test example is simply: 
+While it is sorta implied in the contextual text before the examples, note that in the offical documentation the singular test example is simply: 
 ```yaml
 {{ config(error_if = '>50') }}
 ```
-This will not apply if you do not also add a config line on the singular model to tell it which severity to check for:
+This will not apply if you do not also add a config line on the singular model to tell it which severity to check for. So your test severity config block at the beginning of your file needs to look like this: 
 
 ```yaml
 {# singular test severity : warn #}
@@ -104,7 +103,7 @@ Really good tutorial on Jinja: [https://ttl255.com/jinja2-tutorial-part-2-loops-
 
 {% endtest %}
 ```
-- actually this might not work since the run-query will return a table, and you are evaluating it against a single value
+- actually this might not work since the run-query will return a <b>table</b>, and you are evaluating it against a single value
 - the below code returns proper flow / results
 
 ```sql
@@ -168,8 +167,26 @@ WHERE
 {% endset %}
 
 ```
+- then it turns out that dbt is returning a combination of my schema & table name, which it cannot find in the DB, ie 'USERNMAE.test_table' and it's not that that doesn't exist as a table, but that that is not how the information is stored on the USER_TAB_COLUMNS.
+- thankfully, I found this https://docs.getdbt.com/reference/dbt-jinja-functions/model, you can do <b>{{ model.name }}</b>
 
-## What if the if statement depends on a dynamic model?
+```sql
+
+{% set test_query %}
+
+SELECT count(*)
+FROM
+(
+SELECT column_name, table_name FROM USER_TAB_COLUMNS
+WHERE 
+    table_name = '{{ model.name }}' -- WHY IS IT PASSING AWENG ???
+    AND column_name = 'EMP_STAT_ID'
+)   
+
+{% endset %}
+``` 
+
+## What if the IF statement depends on a dynamic model?
 - ie, you want to feed it a variable that may change in the jinja
 - there migh be a smarter way to make sure it compiles & without a macro, but I thought it would be good to have the sql query run as a macro, where it is super simple to sub in the variable that will change
 - then call that macro in the if statement
