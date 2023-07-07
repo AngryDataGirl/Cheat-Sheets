@@ -22,6 +22,28 @@ https://docs.getdbt.com/reference/dbt-jinja-functions/graph#:~:text=The%20graph%
   {% endfor %}
 {% endif %}
 ```
+- the join is to concatenate the separate tags to strings separated by a blank space
+- note that, we still need to give each element single quotes   
+```
+{% macro get_models_with_tag(tag) %}
+
+{% if execute %}
+
+{% set models_with_tag = [] %}
+{% for model in graph.nodes.values() | selectattr("resource_type", "equalto", "model") %}
+
+    {% if tag in model.config.tags %}
+        {{ models_with_tag.append(model.name) }}
+    {% endif %}
+
+{% endfor %}
+
+{{ return(models_with_tag|join(',')) }}
+{% endif %}
+
+{% endmacro %}
+
+```
 
 # config inheritance
 
