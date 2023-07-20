@@ -9,6 +9,11 @@
 6. [Datatypes](#datatypes)
 7. [Strings](#strings)
 
+# Find Oracle service name
+```sql
+select * from global_name;
+```
+
 # Drop multiple tables fitting certain condition (PL/SQL for loop DROP EXECUTE) <a name = "drop"></a>
 ```sql
 BEGIN
