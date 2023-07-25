@@ -1,8 +1,45 @@
 # DBT models
 
-## selec specific models 
+## dbt commands
+- by default `dbt run` runes everything
+- use `--select` flag to specify a subset of nodes
+  
+|command|arguments|
+|-------|---------|
+|run|`--select`, `--exclude`, `--selector`, `--defer`|
+|test|`--select`, `--exclude`, `--selector`, `--defer`|
+|seed|`--select`, `--exclude`, `--selector`|
+|snapshot|`--select`, `--exclude`, `--selector`|
+|ls(list)|`--select`, `--exclude`, `--selector`, `--resource-type`|
+|compile|`--select`, `--exclude`, `--selector`,`--inline`|
+|freshness|`--select`, `--exclude`, `--selector`|
+|build|`--select`, `--exclude`, `--selector`,`--resource-type`,`--defer`|
+
+## test selection examples 
+
+```yaml
+# Run tests on a model (indirect selection)
+$ dbt test --select customers
+
+# Run tests on all models in the models/staging/jaffle_shop directory (indirect selection)
+$ dbt test --select staging.jaffle_shop
+
+# Run tests downstream of a model (note this will select those tests directly!)
+$ dbt test --select stg_customers+
+
+# Run tests upstream of a model (indirect selection)
+$ dbt test --select +stg_customers
+
+# Run tests on all models with a particular tag (direct + indirect)
+$ dbt test --select tag:my_model_tag
+
+# Run tests on all models with a particular materialization (indirect selection)
+$ dbt test --select config.materialized:table
+
+```
 
 ## printing 
+useful for macros and seeing results of macro code 
 ```sql
 -- {{ print(results) }}
 -- {{ print(results_list[0]) }}
