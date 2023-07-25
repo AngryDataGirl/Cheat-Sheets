@@ -1,3 +1,2 @@
-# Code Templates and Patterns
-
-Code snippets with comments. 
+# Cheat Sheets and References 
+And notes, sometimes.
