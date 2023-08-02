@@ -1,3 +1,8 @@
+# What does variable = . mean in SAS ? 
+https://stackoverflow.com/questions/31078585/what-does-variable-variable-dot-mean-in-oracle-sql-sas
+
+In addition SAS Missing values for character variables appear as blanks. Missing values are set like this for character: if name="none" then name=' '.
+
 ## grouping by a column to get max and formatting a column 
 
 ```SAS
