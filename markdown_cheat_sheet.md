@@ -1,4 +1,4 @@
-[Official Documentation](https://www.markdownguide.org/basic-syntax/#links)
+[John Gruber's Official Documentation (creater of markdown)](https://daringfireball.net/projects/markdown/)
 
 | Element	| Markdown Syntax | Notes |
 | --------| ----------------|--------|
