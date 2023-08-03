@@ -9,6 +9,20 @@
 6. [Datatypes](#datatypes)
 7. [Strings](#strings)
 
+# View all tables
+
+```sql
+SELECT *
+FROM all_tables;
+```
+
+# View all views
+
+```sql
+SELECT view_name
+FROM user_views;
+```
+
 # Find Oracle service name
 ```sql
 select * from global_name;
