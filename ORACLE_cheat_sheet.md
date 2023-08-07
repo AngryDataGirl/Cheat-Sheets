@@ -196,6 +196,7 @@ https://docs.oracle.com/cd/A58617_01/server.804/a58234/datatype.htm
 # Strings <a name = "strings"></a>
 
 ## susbtring
+https://docs.oracle.com/database/121/SQLRF/functions196.htm#SQLRF06114
 
 ```sql
 SUBSTR( str, start_position [, substring_length, [, occurrence ]] );
@@ -209,3 +210,25 @@ The SUBSTR() function accepts three arguments:
 - substring_length: the number of characters in the substring.
 	- If omitted, the SUBSTR() function returns all characters starting from the start_position.
  	- In case the substring_length is less than 1, the SUBSTR() function returns null.
+ 
+## instring
+https://docs.oracle.com/database/121/SQLRF/functions196.htm#SQLRF06114
+
+```sql
+SELECT INSTR('CORPORATE FLOOR','OR', 3, 2) "Instring"
+  FROM DUAL;
+ 
+  Instring
+----------
+        14
+```
+
+## reversed instring
+```sql
+SELECT INSTR('CORPORATE FLOOR','OR', -3, 2) "Reversed Instring"
+  FROM DUAL;
+ 
+Reversed Instring
+-----------------
+                2
+```
