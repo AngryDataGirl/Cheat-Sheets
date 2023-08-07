@@ -22,6 +22,23 @@ PROC SQL outobs = 20; create table test as
 quit;
 ```
 
+## combination of substr and index
+
+```SAS
+PROC SQL outobs = 50; create table test as
+	SELECT 
+	colname1, 
+	substr(colname1, index(colname1, "-")-3,2)>"15" as test_colum1, 
+	substr(colname1, index(colname1, "-")-1,1)="J" as test_column2
+	FROM PSRS.CAREER_CHOICES
+;
+quit;
+```
+- index() returns a int value of where the searched character is, ie XXXXXX-XXXXXX will return 7
+- -3 and the -1 substracts from the index INT value that was returned,
+- last number is position for the substring function
+- index() equivalent in oracle SQL is INSTR()
+
 ## grouping by a column to get max and formatting a column 
 
 ```SAS
