@@ -3,6 +3,25 @@ https://stackoverflow.com/questions/31078585/what-does-variable-variable-dot-mea
 
 In addition SAS Missing values for character variables appear as blanks. Missing values are set like this for character: if name="none" then name=' '.
 
+## generic format of proc sql query
+```SAS
+PROC SQL;
+	SELECT *
+	FROM LIB.TABLE_NAME
+;
+quit;
+```
+
+## limiting obs in proc sql query
+
+```SAS
+PROC SQL outobs = 20; create table test as
+	SELECT *
+	FROM LIB.TABLE_NAME
+;
+quit;
+```
+
 ## grouping by a column to get max and formatting a column 
 
 ```SAS
