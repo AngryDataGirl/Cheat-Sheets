@@ -195,6 +195,78 @@ https://docs.oracle.com/cd/A58617_01/server.804/a58234/datatype.htm
   
 # Strings <a name = "strings"></a>
 
+## apostrophes within strings
+
+[Oracle / PLSQL: Dealing with apostrophes/single quotes in strings (techonthenet.com)](https://www.techonthenet.com/oracle/questions/quotes.php#:~:text=Answer%3A%20Now%20it%20is%20first%20important%20to%20remember,where%20the%20quote%20is%20located%20in%20the%20string.)
+
+**Question:** How can I handle apostrophes and single quotes in strings? As you know, single quotes start and terminate strings in SQL.
+
+**Answer:** Now it is first important to remember that in Oracle, you enclose strings in single quotes. The first quote denotes the beginning of the string and the second quote denotes the termination of the string.
+
+If you need to deal with apostrophes/single quotes in strings, your solution depends on where the quote is located in the string.
+
+We'll take a look at 4 scenarios where you might want to place an apostrophe or single quote in a string.
+
+## **Apostrophe/single quote at start of string**
+
+When the apostrophe/single quote is at the start of the string, you need to enter 3 single quotes for Oracle to display a quote symbol. For example:
+
+```
+SELECT '''Hi There'
+FROM dual;
+```
+
+would return
+
+```
+'Hi There
+```
+
+## **Apostrophe/single quote in the middle of a string**
+
+When the apostrophe/single quote is in the middle of the string, you need to enter 2 single quotes for Oracle to display a quote symbol. For example:
+
+```
+SELECT 'He''s always the first to arrive'
+FROM dual;
+```
+
+would return
+
+```
+He's always the first to arrive
+```
+
+## **Apostrophe/single quote at the end of a string**
+
+When the apostrophe/single quote is at the end of a string, you need to enter 3 single quotes for Oracle to display a quote symbol. For example:
+
+```
+SELECT 'Smiths'''
+FROM dual;
+```
+
+would return
+
+```
+Smiths'
+```
+
+## **Apostrophe/single quote in a concatenated string**
+
+If you were to concatenate an apostrophe/single quote in a string, you need to enter 4 single quotes for Oracle to display a quote symbol. For example:
+
+```
+SELECT 'There' || '''' || 's Henry'
+FROM dual;
+```
+
+would return
+
+```
+There's Henry
+```
+
 ## susbtring
 https://docs.oracle.com/database/121/SQLRF/functions196.htm#SQLRF06114
 
