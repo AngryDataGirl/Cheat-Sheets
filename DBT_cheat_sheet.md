@@ -81,15 +81,8 @@ models:
               config:
                 where: "order_date = current_date"
 ```
-# something to troubleshoot
-
-There appears to be an issue with the compilation of singular tests when running `dbt test` without using a specific test selection command. This is the sort of error / failure that occurs.
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d1d3dc4c-6f1c-412d-88d4-e513d3644ee9/Untitled.png)
-
-Currently uncertain if this is related to how the tests are stored in the structure, or if this can be fixed by configuring the test paths differently.
-
-The following command will run the singular tests without complaining about compilation error
+# save singular tests in correct filepath 
+save singular tests as sql queries in the test path, no need to put them in directory, dbt will know where to find them so long as they are with your other tests  
 
 ## printing 
 useful for macros and seeing results of macro code 
