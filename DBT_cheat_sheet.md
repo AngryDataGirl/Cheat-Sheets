@@ -1,4 +1,7 @@
-# DBT models
+# DBT Cheat Sheet
+
+- [dbt_commands](#dbt-commands)
+- [test selection examples](#test-selection-examples)
 
 ## dbt commands
 - by default `dbt run` runes everything
@@ -16,6 +19,8 @@
 |build|`--select`, `--exclude`, `--selector`,`--resource-type`,`--defer`|
 
 ## test selection examples 
+[Test selection examples | dbt Developer Hub (getdbt.com)](https://docs.getdbt.com/reference/node-selection/test-selection-examples)
+
 
 ```yaml
 # Run tests on a model (indirect selection)
@@ -30,13 +35,61 @@ $ dbt test --select stg_customers+
 # Run tests upstream of a model (indirect selection)
 $ dbt test --select +stg_customers
 
-# Run tests on all models with a particular tag (direct + indirect)
+# Run tests on all models with a particular tag (direct + indirect) - note that tag has to be set on the model in the yaml config
 $ dbt test --select tag:my_model_tag
 
 # Run tests on all models with a particular materialization (indirect selection)
 $ dbt test --select config.materialized:table
 
+# Run singular tests only
+$ dbt test --select test_type:singular
+
+# Run generic tests only
+$ dbt test --select test_type:generic
+
+# Run all tests
+$ dbt test
+
+# directly select the test by name
+$ dbt test --select (test_name) 
 ```
+
+
+#### Custom test name
+[define a custom name for one test](https://docs.getdbt.com/reference/resource-properties/tests#define-a-custom-name-for-one-test)
+
+By default, dbt will synthesize a name for your generic test by concatenating:
+- test name (not_null, unique, etc)
+- model name (or source/seed/snapshot)
+- column name (if relevant)
+- arguments (if relevant, e.g. values for accepted_values)
+It does not include any configurations for the test. If the concatenated name is too long, dbt will use a truncated and hashed version instead. The goal is to preserve unique identifiers for all resources in your project, including tests.
+
+By defining a custom name, you get full control over how the test will appear in log messages and metadata artifacts. You'll also be able to select the test by that name.
+
+```yaml
+version: 2
+
+models:
+  - name: orders
+    columns:
+      - name: status
+        tests:
+          - accepted_values:
+              name: unexpected_order_status_today
+              values: ['placed', 'shipped', 'completed', 'returned']
+              config:
+                where: "order_date = current_date"
+```
+# something to troubleshoot
+
+There appears to be an issue with the compilation of singular tests when running `dbt test` without using a specific test selection command. This is the sort of error / failure that occurs.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d1d3dc4c-6f1c-412d-88d4-e513d3644ee9/Untitled.png)
+
+Currently uncertain if this is related to how the tests are stored in the structure, or if this can be fixed by configuring the test paths differently.
+
+The following command will run the singular tests without complaining about compilation error
 
 ## printing 
 useful for macros and seeing results of macro code 
