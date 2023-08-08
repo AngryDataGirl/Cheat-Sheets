@@ -27,6 +27,46 @@ FROM user_views;
 ```sql
 select * from global_name;
 ```
+# find tables with specific column name in oracle 
+
+## A. Tables accessible to the current user
+```sql
+select t.owner as schema_name,
+       t.table_name
+from sys.all_tab_columns col
+inner join sys.all_tables t on col.owner = t.owner 
+                              and col.table_name = t.table_name
+where col.column_name = 'QUANTITY_BILLED'
+-- excluding some Oracle maintained schemas
+and col.owner not in ('ANONYMOUS','CTXSYS','DBSNMP','EXFSYS', 'LBACSYS', 
+   'MDSYS', 'MGMT_VIEW','OLAPSYS','OWBSYS','ORDPLUGINS', 'ORDSYS','OUTLN', 
+   'SI_INFORMTN_SCHEMA','SYS','SYSMAN','SYSTEM', 'TSMSYS','WK_TEST',
+   'WKPROXY','WMSYS','XDB','APEX_040000', 'APEX_PUBLIC_USER','DIP', 
+   'FLOWS_30000','FLOWS_FILES','MDDATA', 'ORACLE_OCM', 'XS$NULL',
+   'SPATIAL_CSW_ADMIN_USR', 'SPATIAL_WFS_ADMIN_USR', 'PUBLIC', 'WKSYS')
+order by col.owner, 
+         col.table_name;
+```
+
+## B. If you have privilege on dba_tab_columns and dba_tables
+
+```sql
+select t.owner as schema_name,
+       t.table_name
+from sys.dba_tab_columns col
+inner join sys.dba_tables t on col.owner = t.owner 
+                              and col.table_name = t.table_name
+where col.column_name = 'QUANTITY_BILLED'
+-- excluding some Oracle maintained schemas
+and col.owner not in ('ANONYMOUS','CTXSYS','DBSNMP','EXFSYS', 'LBACSYS', 
+   'MDSYS', 'MGMT_VIEW','OLAPSYS','OWBSYS','ORDPLUGINS', 'ORDSYS','OUTLN', 
+   'SI_INFORMTN_SCHEMA','SYS','SYSMAN','SYSTEM', 'TSMSYS','WK_TEST',
+   'WKPROXY','WMSYS','XDB','APEX_040000', 'APEX_PUBLIC_USER','DIP', 
+   'FLOWS_30000','FLOWS_FILES','MDDATA', 'ORACLE_OCM', 'XS$NULL',
+   'SPATIAL_CSW_ADMIN_USR', 'SPATIAL_WFS_ADMIN_USR', 'PUBLIC', 'WKSYS')
+order by col.owner, 
+         col.table_name;
+```
 
 # Drop multiple tables fitting certain condition (PL/SQL for loop DROP EXECUTE) <a name = "drop"></a>
 ```sql
