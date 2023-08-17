@@ -38,6 +38,9 @@ $ dbt test --select +stg_customers
 # Run tests on all models with a particular tag (direct + indirect) - note that tag has to be set on the model in the yaml config
 $ dbt test --select tag:my_model_tag
 
+# Run tests on all models with different tags
+$ dbt run --select tag:my_model_tag1 tag:my_model_tag2
+
 # Run tests on all models with a particular materialization (indirect selection)
 $ dbt test --select config.materialized:table
 
