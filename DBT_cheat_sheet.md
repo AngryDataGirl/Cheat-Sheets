@@ -1,8 +1,9 @@
 # DBT Cheat Sheet
 
 - [dbt_commands](#dbt-commands)
-- [test selection examples](#test-selection-examples)
-
+- [Selecting models](#selecting-models)
+- [Selecting tests](#selecting-tests)
+  
 ## dbt commands
 - by default `dbt run` runes everything
 - use `--select` flag to specify a subset of nodes
@@ -18,47 +19,29 @@
 |freshness|`--select`, `--exclude`, `--selector`|
 |build|`--select`, `--exclude`, `--selector`,`--resource-type`,`--defer`|
 
-## test selection examples 
+
+### Selecting Models  
+```python 
+# Run tests on a model (indirect selection) / upstream / downstream
+$ dbt test --select customers / +stg_customers / stg_customers+
+
+# Run tests on all models with a particular tag (direct + indirect) - note that tag has to be set on the model in the yaml config / multi tags selection USE COMMA NO SPACES
+$ dbt test --select tag:my_model_tag
+$ dbt run --select tag:my_model_tag1,tag:my_model_tag2
+```
+
+### Selecting Tests
 [Test selection examples | dbt Developer Hub (getdbt.com)](https://docs.getdbt.com/reference/node-selection/test-selection-examples)
 
-
-```yaml
-# Run tests on a model (indirect selection)
-$ dbt test --select customers
-
-# Run tests on all models in the models/staging/jaffle_shop directory (indirect selection)
-$ dbt test --select staging.jaffle_shop
-
-# Run tests downstream of a model (note this will select those tests directly!)
-$ dbt test --select stg_customers+
-
-# Run tests upstream of a model (indirect selection)
-$ dbt test --select +stg_customers
-
-# Run tests on all models with a particular tag (direct + indirect) - note that tag has to be set on the model in the yaml config
-$ dbt test --select tag:my_model_tag
-
-# Run tests on all models with different tags
-$ dbt run --select tag:my_model_tag1 tag:my_model_tag2
-
-# Run tests on all models with a particular materialization (indirect selection)
-$ dbt test --select config.materialized:table
-
-# Run singular tests only
-$ dbt test --select test_type:singular
-
-# Run generic tests only
-$ dbt test --select test_type:generic
-
-# Run all tests
-$ dbt test
+```python
+# singular / generic 
+$ dbt test --select test_type:singular / generic
 
 # directly select the test by name
 $ dbt test --select (test_name) 
 ```
 
-
-#### Custom test name
+#### Defining custom test names (more human readable)
 [define a custom name for one test](https://docs.getdbt.com/reference/resource-properties/tests#define-a-custom-name-for-one-test)
 
 By default, dbt will synthesize a name for your generic test by concatenating:
