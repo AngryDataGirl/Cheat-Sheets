@@ -1,41 +1,51 @@
 # Table of contents
-1. [Drop Tables](#drop)
-2. [Columns](#columns)
-3. [Dates](#dates)
+1. [Oracle Service Name](#find-oracle-service-name)
+2. [Tables](#tables)
+	- [View all tables](#view-all-tables) 
+3. [Columns](#columns)
+	- [Search for specific columns](#search-for-specific-columns)
+5. [Dates](#dates)
     1. [Format Mask](#dateformatmask)
-4. [Indexes](#indexes)
+6. [Indexes](#indexes)
     1. [Sub paragraph](#subparagraph1)
-5. [Grant](#grant)
-6. [Datatypes](#datatypes)
-7. [Strings](#strings)
+7. [Grant](#grant)
+8. [Datatypes](#datatypes)
+9. [Strings](#strings)
+10. [Loops](#loops)
 
-# View all tables
+
+# Find Oracle service name
+Helpful for trying to find the connection information required to set up other connections (ie, through python).
+
+```sql
+select * from global_name;
+```
+
+# Tables
+
+## View all tables or view all user views 
+Helpful when trying to:
+- understand what tables or v iews are within a schema
+- find table names or view names within a schema
 
 ```sql
 SELECT *
 FROM all_tables;
 ```
-
-# View all views
-
 ```sql
 SELECT view_name
 FROM user_views;
 ```
 
-# Find Oracle service name
-```sql
-select * from global_name;
-```
+# Columns
 
-# search db for specific columns
+## Search DB for specific columns
 
-to find all tables with a particular column:
+To find all tables with a particular column when you know the column name:
 
 ```sql
 select owner, table_name from all_tab_columns where column_name = 'ID';
 ```
-
 To find tables that have any or all of the 4 columns:
 
 ```sql
@@ -44,7 +54,6 @@ from all_tab_columns
 where column_name in ('ID', 'FNAME', 'LNAME', 'ADDRESS');
 
 ```
-
 To find tables that have all 4 columns (with none missing):
 
 ```sql
@@ -54,6 +63,7 @@ where column_name in ('ID', 'FNAME', 'LNAME', 'ADDRESS')
 group by owner, table_name
 having count(*) = 4;
 ```
+
 # find tables with specific column name in oracle 
 
 ## A. Tables accessible to the current user
@@ -93,20 +103,6 @@ and col.owner not in ('ANONYMOUS','CTXSYS','DBSNMP','EXFSYS', 'LBACSYS',
    'SPATIAL_CSW_ADMIN_USR', 'SPATIAL_WFS_ADMIN_USR', 'PUBLIC', 'WKSYS')
 order by col.owner, 
          col.table_name;
-```
-
-# Drop multiple tables fitting certain condition (PL/SQL for loop DROP EXECUTE) <a name = "drop"></a>
-```sql
-BEGIN
-  FOR x IN
-    (
-    SELECT
-    object_name FROM all_objects WHERE owner = 'owner_name' AND object_name LIKE '%string%'
-    ) 
-    LOOP 
-        EXECUTE immediate 'DROP TABLE  '||x.object_name; 
-    END LOOP;
-END;
 ```
 
 # Columns (add, modify, drop, rename) <a name = "columns"></a>
@@ -368,3 +364,60 @@ Reversed Instring
 -----------------
                 2
 ```
+
+# Loops
+
+## Create views
+
+```sql
+begin
+    for x in (
+        SELECT * 
+        FROM all_tables 
+        WHERE owner = 'PIDAR_RPT' AND (
+--            table_name LIKE '%M1%'
+--            OR 
+--            table_name LIKE '%M2%'
+--            OR 
+            table_name LIKE '%M3%'
+            )
+            )
+    loop
+        execute immediate 'CREATE VIEW '||x.table_name||' AS (SELECT * FROM '||x.owner||'.'|| x.table_name||')';
+    end loop;
+end;```
+
+## Grant permissions
+```sql
+begin
+    for x in (
+        SELECT * 
+        FROM all_views 
+        WHERE owner = 'PIDAR'
+        AND view_name LIKE '%M1%'
+        OR view_name LIKE '%M2%'
+        OR view_name LIKE '%M3%' /*OR view_name LIKE '%M2%'*/)
+    loop
+        execute immediate 'GRANT SELECT ON '||x.owner||'.'|| x.view_name || ' to ' || 'USER2';
+    end loop;
+end;```
+
+## Drop tables
+```sql
+begin
+  for i in (
+    SELECT 'drop view '||view_name||' cascade constraints' tbl 
+    FROM user_views 
+    WHERE 
+--        table_name LIKE '%something%'
+--        OR 
+--        table_name LIKE '%something%'
+--        OR 
+        view_name LIKE '%something%'
+        ) 
+  loop
+     execute immediate i.tbl;
+  end loop;
+end;
+```
+
