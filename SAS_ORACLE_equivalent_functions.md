@@ -1,0 +1,6 @@
+# Equivalent Functions in SAS and ORACLE Cheat Sheet
+
+|SAS FUNCTION|ORALE EQUIVALENT|NOTES|
+|-|-|-|
+|DECODE|CASE WHEN||
+|TRANSLATE|TRIM||
