@@ -4,18 +4,18 @@
 	- [View all tables](#view-all-tables) 
 3. [Columns](#columns)
 	- [Search for specific columns](#search-for-specific-columns)
-5. [Dates](#dates)
-    1. [Format Mask](#dateformatmask)
-6. [Indexes](#indexes)
-    1. [Sub paragraph](#subparagraph1)
 7. [Grant](#grant)
 8. [Datatypes](#datatypes)
 9. [Strings](#strings)
 10. [Loops](#loops)
+5. [Dates](#dates)
+    1. [Format Mask](#dateformatmask)
+6. [Indexes](#indexes)
+    1. [Sub paragraph](#subparagraph1)
 
 
 # Find Oracle service name
-Helpful for trying to find the connection information required to set up other connections (ie, through python).
+Helpful for trying to find the connection information required to set up other connections (ie, through python) or some dashboard software like POWER BI.
 
 ```sql
 select * from global_name;
@@ -32,6 +32,7 @@ Helpful when trying to:
 SELECT *
 FROM all_tables;
 ```
+
 ```sql
 SELECT view_name
 FROM user_views;
@@ -210,36 +211,7 @@ IF index_count > 0 THEN
 END IF;
 END;
 ```
-# grant  <a name = "grant"></a>
 
-## Procedure for granting select on all your view / tables to another user
-```sql
-begin
-    for x in (select * from all_views/all_tables where owner = 'replace this with USER NAME 1 that owns table')
-    loop
-        execute immediate 'GRANT SELECT ON '||x.owner||'.'|| x.view_name || ' to ' || 'replace this with USER NAME that view is to be granted to';
-    end loop;
-end;
-```
-## privilege levels  
-no comma needed around username! 
-
-### granting object privileges to a role
-```sql
-GRANT SELECT ON tablename TO username;
-```
-
-### granting object privileges WITH GRANT OPTION
-- When receiving error ORA-01720: grant option does not exist for 'table_name'
-
-```sql
-GRANT SELECT ON schema.table_name TO username WITH GRANT OPTION;
-```
-
-### granting create view to a role 
-```
-GRANT CREATE ANY VIEW TO username;
-```
 # Datatypes <a name = "datatypes"></a>
 
 ## datatype codes
@@ -364,50 +336,88 @@ Reversed Instring
 -----------------
                 2
 ```
+# grant  <a name = "grant"></a>
+
+no comma needed around username! 
+
+### granting object privileges to a role
+```sql
+GRANT SELECT ON tablename TO username;
+```
+
+### granting object privileges WITH GRANT OPTION
+- When receiving error ORA-01720: grant option does not exist for 'table_name'
+
+```sql
+GRANT SELECT ON schema.table_name TO username WITH GRANT OPTION;
+```
+
+### granting create view to a role 
+```
+GRANT CREATE ANY VIEW TO username;
+```
 
 # Loops
 
-## Create views
+Handy Loop Logic templates to 
+- drop tables or views matching a certain critera
+- create tables or views with a certain naming convention
+- share tables or views / grant permissions 
+
+## Loop for creating views or tables 
 
 ```sql
 begin
     for x in (
         SELECT * 
-        FROM all_tables 
-        WHERE owner = 'PIDAR_RPT' AND (
---            table_name LIKE '%M1%'
---            OR 
---            table_name LIKE '%M2%'
---            OR 
-            table_name LIKE '%M3%'
+        FROM all_tables / all_views 
+        WHERE owner = 'OWNER_NAME' AND (
+            table_name/view_name LIKE '%criteria1%'
+            OR table_name/view_name LIKE '%criteria1%'
+            OR table_name/view_name LIKE '%criteria1%'
             )
             )
     loop
-        execute immediate 'CREATE VIEW '||x.table_name||' AS (SELECT * FROM '||x.owner||'.'|| x.table_name||')';
+        execute immediate 'CREATE VIEW '||x.table_name/x.view_name||' AS (SELECT * FROM '||x.owner||'.'|| x.table_name/x.view_name||')';
     end loop;
-end;```
+end;
+```
 
-## Grant permissions
+## Loop for grant permissions
+
+simple loop
+```sql
+begin
+    for x in (select * from all_views/all_tables where owner = 'replace this with USER NAME 1 that owns table')
+    loop
+        execute immediate 'GRANT SELECT ON '||x.owner||'.'|| x.view_name || ' to ' || 'replace this with USER NAME that view is to be granted to';
+    end loop;
+end;
+```
+loop with criteria for matching table or view names
 ```sql
 begin
     for x in (
         SELECT * 
-        FROM all_views 
-        WHERE owner = 'PIDAR'
-        AND view_name LIKE '%M1%'
-        OR view_name LIKE '%M2%'
-        OR view_name LIKE '%M3%' /*OR view_name LIKE '%M2%'*/)
+        FROM all_tables / all_views  
+        WHERE owner = 'OWNER_NAME'
+        AND table_name/view_name LIKE '%criteria1%'
+        OR table_name/view_name LIKE '%criteria2%'
+        OR table_name/view_name LIKE '%criteria3%'
+	)
     loop
-        execute immediate 'GRANT SELECT ON '||x.owner||'.'|| x.view_name || ' to ' || 'USER2';
+        execute immediate 'GRANT SELECT ON '||x.owner||'.'|| x.table_name/x.view_name || ' to ' || 'USER YOU ARE GRANTING PERMISSIONS TO';
     end loop;
-end;```
+end;
+```
 
-## Drop tables
+## Loop for dropping tables
+
 ```sql
 begin
   for i in (
-    SELECT 'drop view '||view_name||' cascade constraints' tbl 
-    FROM user_views 
+    SELECT 'drop view '||table_name/view_name||' cascade constraints' tbl 
+    FROM user_views / user_tables
     WHERE 
 --        table_name LIKE '%something%'
 --        OR 
