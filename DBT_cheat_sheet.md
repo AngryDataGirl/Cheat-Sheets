@@ -1,9 +1,15 @@
 # DBT Cheat Sheet
 
 - [dbt_commands](#dbt-commands)
-- [Selecting models](#selecting-models)
-- [Selecting tests](#selecting-tests)
-  
+  - [Selecting models](#selecting-models)
+  - [Selecting tests](#selecting-tests)
+- [Structure and config](#structure-and-config)
+  - [Where to save singular tests](#where-to-save-singular-tests) 
+  - [Defining custom test names](#defining-custom-test-names)
+- [Notes on creating macros](#notes-on-creating-macros)
+  - [Printing output](#printing-output) 
+  - [Accessing models or context items through the graph node](#accessing-models-or-context-items-through-the-graph-node) 
+
 ## dbt commands
 - by default `dbt run` runes everything
 - use `--select` flag to specify a subset of nodes
@@ -20,7 +26,7 @@
 |build|`--select`, `--exclude`, `--selector`,`--resource-type`,`--defer`|
 
 
-### Selecting Models  
+## Selecting Models  
 ```python 
 # Run tests on a model (indirect selection) / upstream / downstream
 $ dbt test --select customers / +stg_customers / stg_customers+
@@ -30,7 +36,7 @@ $ dbt test --select tag:my_model_tag
 $ dbt run --select tag:my_model_tag1,tag:my_model_tag2
 ```
 
-### Selecting Tests
+## Selecting Tests
 [Test selection examples | dbt Developer Hub (getdbt.com)](https://docs.getdbt.com/reference/node-selection/test-selection-examples)
 
 ```python
@@ -41,7 +47,13 @@ $ dbt test --select test_type:singular / generic
 $ dbt test --select (test_name) 
 ```
 
-#### Defining custom test names (more human readable)
+# Structure and config 
+
+## Where to save singular tests 
+save singular tests as sql queries in the test path, no need to put them in directory, dbt will know where to find them so long as they are with your other tests  
+
+## Defining custom test names 
+(more human readable)
 [define a custom name for one test](https://docs.getdbt.com/reference/resource-properties/tests#define-a-custom-name-for-one-test)
 
 By default, dbt will synthesize a name for your generic test by concatenating:
@@ -67,17 +79,17 @@ models:
               config:
                 where: "order_date = current_date"
 ```
-# save singular tests in correct filepath 
-save singular tests as sql queries in the test path, no need to put them in directory, dbt will know where to find them so long as they are with your other tests  
 
-## printing 
+# Notes on creating macros 
+
+## Printing output
 useful for macros and seeing results of macro code 
 ```sql
 -- {{ print(results) }}
 -- {{ print(results_list[0]) }}
 ```
 
-# accessing models or context items through the graph node
+## Accessing models or context items through the graph node
 https://docs.getdbt.com/reference/dbt-jinja-functions/graph#:~:text=The%20graph%20context%20variable%20is%20a%20dictionary%20which,node%20ids%20onto%20dictionary%20representations%20of%20those%20nodes.
 
 ```sql
