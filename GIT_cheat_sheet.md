@@ -1,3 +1,26 @@
+
+- [branches](#branches)
+  - [Navigating branches](#navigating-branches)
+  - [creating branches](#creating-branches)
+  - [checking out branches](#checking-out-branches)
+- [basic actions](#basic-actions)
+  - [add files / stage files for commit](#add-files--stage-files-for-commit)
+  - [commit files](#commit-files)
+  - [undo the commit you just did](#undo-the-commit-you-just-did)
+- [instead of .gitignore -- just exclude for yourself](#instead-of-gitignore----just-exclude-for-yourself)
+- [basic workflow examples](#basic-workflow-examples)
+  - [simple commit and push upstream](#simple-commit-and-push-upstream)
+  - [VIM / text editor commands to complete a commit](#vim--text-editor-commands-to-complete-a-commit)
+  - [merging in master to your branch (no conflicts)](#merging-in-master-to-your-branch-no-conflicts)
+  - [merging in master to your branch (there are conflicts)](#merging-in-master-to-your-branch-there-are-conflicts)
+  - [Using git fetch to Fetch Changes Then Merge Using Commit Hash](#using-git-fetch-to-fetch-changes-then-merge-using-commit-hash)
+- [deleting a branch](#deleting-a-branch)
+- [Reversing git actions](#reversing-git-actions)
+  - [Undo `git add` for uncommitted changes with:](#undogit-addfor-uncommitted-changes-with)
+  - [To unstage all changes for all files:](#to-unstage-all-changes-for-all-files)
+- [delete a local branch](#delete-a-local-branch)
+- [delete a remote branch](#delete-a-remote-branch)
+
 # branches
 
 ## Navigating branches
@@ -89,6 +112,18 @@ git commit -m "insert comment here"
 git push -u origin <branch_name>
 ```
 
+[git - Merging changes from master into my branch - Stack Overflow](https://stackoverflow.com/questions/41045548/merging-changes-from-master-into-my-branch)
+
+1. `git status`
+2. `git checkout master`
+3. `git pull` 
+    1. “branch is behind by x commits”
+4. if local changes need to be commit or stash
+5. `git stash`
+6. `git pull` to update local master
+7. `git checkout local_branch`
+8. `git merge master`
+
 ## merging in master to your branch (there are conflicts)
 Scenario:
 1. you have been working on a branch
@@ -148,3 +183,60 @@ That will remove the file from the current index (the "about to be committed" li
 ```
 git reset
 ```
+
+
+# delete a local branch
+
+1. list all branches
+    
+    ```
+    git branch -a
+    ```
+    
+    It is not possible to delete a branch you are currently in and viewing. You will get an error. 
+    
+    Before deleting a local branch, 
+    
+2. switch to a branch **you do NOT want to delete**:
+
+```
+git checkout branch_name 
+```
+
+1. delete the branch using this command. 
+
+```
+git branch -d local_branch_name
+```
+
+If the branch contains unmerged changes and unpushed commits, the `-d` flag ill not allow local branch to be deleted
+
+this is because commits are not seen by any other branches and git is protecting you from accidentally losing any commit data
+
+if you still want to delete and are ABSOLUTELY SURE because there is no prompt asking you to confirm your actions
+
+1. `-D` flag must be used
+
+```
+git branch -D local_branch_name
+```
+
+# delete a remote branch
+
+Remote branches are separate from local branches. They are repositories hosted on a remote server that can be accessed there. Local branches are repositories on your local system. 
+
+You don’t use `git branch`command that you use for local branches, instead you delete remote branches with the `git push` command. You’ll need to specify the name of the remote which is usually `origin`. 
+
+1. list all remote branches
+    
+    ```yaml
+    git branch -r
+    ```
+    
+2. remote branches will show as g`remote/origin/branch1` and `remote/origin/branch2` 
+    1. where remote name is `origin`
+    2. and remote branch name is `branch1`
+    
+    ```yaml
+    git push remote_name -d remote_branch_name
+    ```

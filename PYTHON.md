@@ -1,4 +1,32 @@
-# Creating a dictionary 
+
+- [Dictionaries](#dictionaries)
+  - [Creating a dictionary](#creating-a-dictionary)
+  - [Keys](#keys)
+    - [view all keys](#view-all-keys)
+  - [Values](#values)
+    - [view all values](#view-all-values)
+    - [access values](#access-values)
+    - [access single value with a key](#access-single-value-with-a-key)
+    - [access single value with a key that does not exist](#access-single-value-with-a-key-that-does-not-exist)
+    - [use get() to access value](#use-get-to-access-value)
+  - [add values](#add-values)
+    - [add value to dictionary](#add-value-to-dictionary)
+    - [add value to dictionray in a for loop](#add-value-to-dictionray-in-a-for-loop)
+    - [increment count of value in dictionary](#increment-count-of-value-in-dictionary)
+  - [methods for deleting values](#methods-for-deleting-values)
+    - [with keyword DEL](#with-keyword-del)
+    - [using pop](#using-pop)
+    - [using popitem()](#using-popitem)
+  - [Keys and Values](#keys-and-values)
+    - [view all key value pairs](#view-all-key-value-pairs)
+    - [find number of key value pairs](#find-number-of-key-value-pairs)
+- [Strings](#strings)
+  - [replace()](#replace)
+
+
+# Dictionaries 
+
+## Creating a dictionary 
 ```python
 #create an empty dictionary
 my_dictionary = {} 
@@ -10,7 +38,7 @@ print(my_dictionary)
 print(type(my_dictionary))
 ```
 
-# Keys
+## Keys
 - keys can only be immutable datatypes: integers, strings, tuples, floating point numbers, and booleans.
 - mutable: sets, lists, or dictionaries
 
@@ -19,12 +47,12 @@ print(type(my_dictionary))
 print(my_dictionary.keys())
 ```
 
-# Values
-## view all values 
+## Values
+### view all values 
 ```python
 print(my_dictionary.values())
 ```
-## access values
+### access values
 ### access single value with a key
 ```python
 #access the value associated with the given key
@@ -101,7 +129,7 @@ my_dictionary.update(key1= 'value1', key2 = value2, key3 = "value3")
 popped_item = my_information.popitem()
 # returns (key3 = "value3")
 ```
-# Keys and Values
+## Keys and Values
 
 ### view all key value pairs
 ```python
@@ -111,3 +139,11 @@ print(my_dictionary.items())
 ```python
 print(len(my_dictionary))
 ```
+
+# Strings
+
+## replace()
+
+```python
+x.replace(".", "[.]")
+``` 
