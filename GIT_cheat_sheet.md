@@ -21,6 +21,65 @@
 - [delete a local branch](#delete-a-local-branch)
 - [delete a remote branch](#delete-a-remote-branch)
 
+# terminology
+
+- **Working tree:** The set of nested directories and files that contain the project that's being worked on.
+- **Repository (repo):** The directory, located at the top level of a working tree, where Git keeps all the history and metadata for a project. Repositories are almost always referred to as repos. A bare repository is one that isn't part of a working tree; it's used for sharing or backup. A bare repo is usually a directory with a name that ends in .git—for example, project.git.
+- **Hash:** A number produced by a hash function that represents the contents of a file or another object as a fixed number of digits. Git uses hashes that are 160 bits long. One advantage to using hashes is that Git can tell whether a file has changed by hashing its contents and comparing the result to the previous hash. If the file time-and-date stamp is changed, but the file hash isn’t changed, Git knows the file contents aren’t changed.
+- **Object:** A Git repo contains four types of objects, each uniquely identified by an SHA-1 hash. A blob object contains an ordinary file. A tree object represents a directory; it contains names, hashes, and permissions. A commit object represents a specific version of the working tree. A tag is a name attached to a commit.
+- **Commit:** When used as a verb, commit means to make a commit object. This action takes its name from commits to a database. It means you are committing the changes you have made so that others can eventually see them, too.
+- **Branch:** A branch is a named series of linked commits. The most recent commit on a branch is called the head. The default branch, which is created when you initialize a repository, is called main, often named master in Git. The head of the current branch is named HEAD. Branches are an incredibly useful feature of Git because they allow developers to work independently (or together) in branches and later merge their changes into the default branch.
+- **Remote:** A remote is a named reference to another Git repository. When you create a repo, Git creates a remote named origin that is the default remote for push and pull operations.
+- **Commands, subcommands, and options:** Git operations are performed by using commands like git push and git pull. git is the command, and push or pull is the subcommand. The subcommand specifies the operation you want Git to perform. Commands frequently are accompanied by options, which use hyphens (-) or double hyphens (--). For example, git reset --hard.
+
+# config 
+
+```
+git config --global user.name "<USER_NAME>"
+git config --global user.email "<USER_EMAIL>"
+git config --list
+user.name=User Name
+user.email=user-name@contoso.com
+```
+
+# initialize repo 
+initialize your new repository and set the name of the default branch to main:
+
+
+```
+git init --initial-branch=main
+git init -b main
+-- or --
+git init
+git checkout -b main
+```
+# status
+
+```
+git status
+```
+
+# Use an ls command to show the contents of the working tree:
+
+```
+ls -la
+```
+
+**git status**
+Git status displays the state of the working tree (and of the staging area. It lets you see which changes are currently being tracked by Git, so you can decide whether you want to ask Git to take another snapshot.
+
+**git add**
+git add is the command you use to tell Git to start keeping track of changes in certain files.
+The technical term is staging these changes. You'll use git add to stage changes to prepare for a commit. All changes in files that have been added but not yet committed are stored in the staging area.
+
+**git commit**
+After you've staged some changes for commit, you can save your work to a snapshot by invoking the git commit command.
+
+Commit is both a verb and a noun. It has essentially the same meaning as when you commit to a plan or commit a change to a database. As a verb, committing changes means you put a copy (of the file, directory, or other "stuff") in the repository as a new version. As a noun, a commit is the small chunk of data that gives the changes you committed a unique identity. The data that's saved in a commit includes the author's name and e-mail address, the date, comments about what you did (and why), an optional digital signature, and the unique identifier of the preceding commit.
+
+**git log**
+The git log command allows you to see information about previous commits. Each commit has a message attached to it (a commit message), and the git log command prints information about the most recent commits, like their time stamp, the author, and a commit message. This command helps you keep track of what you've been doing and what changes have been saved.
+
 # branches
 
 ## Navigating branches
