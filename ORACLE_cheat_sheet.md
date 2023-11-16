@@ -417,9 +417,9 @@ end;
 begin
   for i in (
     SELECT 'drop view '||table_name/view_name||' cascade constraints' tbl 
-    FROM user_views / user_tables
-    WHERE 
---        table_name LIKE '%something%'
+    FROM user_views / user_tables / all_tables
+    WHERE
+	 owner = 'AWENG'
 --        OR 
 --        table_name LIKE '%something%'
 --        OR 
