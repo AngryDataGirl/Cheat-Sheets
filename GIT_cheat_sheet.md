@@ -102,7 +102,7 @@ git checkout -branch_name
 ```
 where branch name is the name of the branch you want to checkout (get the name of the branch by listing all branches above)
 
-## renaming branches
+## renaming local git branches
 Before we begin, make sure you’ve selected the branch you want to rename. Run this command to do so:
 
 ```sql
