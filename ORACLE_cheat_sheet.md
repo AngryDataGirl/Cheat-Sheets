@@ -38,6 +38,14 @@ SELECT view_name
 FROM user_views;
 ```
 
+# list all db links
+
+```sql
+DBA_DB_LINKS - All DB links defined in the database
+ALL_DB_LINKS - All DB links the current user has access to
+USER_DB_LINKS - All DB links owned by current user
+```
+
 # list functions, procedures and packages
 
 ```sql
