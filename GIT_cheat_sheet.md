@@ -102,6 +102,37 @@ git checkout -branch_name
 ```
 where branch name is the name of the branch you want to checkout (get the name of the branch by listing all branches above)
 
+## renaming branches
+Before we begin, make sure you’ve selected the branch you want to rename. Run this command to do so:
+
+```sql
+git checkout old-name
+```
+
+Replace `old-name` with the name of the appropriate branch.
+
+```sql
+git branch -m **new**-name
+```
+
+Alternatively, you can rename a local branch by running the following commands:
+
+```sql
+git checkout master
+```
+
+Then, rename the branch by running:
+
+```sql
+git branch -m old-name **new**-name
+```
+
+Verify that the renaming was successful:
+
+```sql
+git branch -a
+```
+
 # basic actions
 
 ## add files / stage files for commit 
