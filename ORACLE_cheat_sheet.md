@@ -38,6 +38,14 @@ SELECT view_name
 FROM user_views;
 ```
 
+# list functions, procedures and packages
+
+```sql
+SELECT *
+FROM ALL_OBJECTS
+WHERE OBJECT_TYPE IN ('FUNCTION','PROCEDURE','PACKAGE')
+```
+
 # Columns
 
 ## Search DB for specific columns
