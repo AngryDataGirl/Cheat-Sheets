@@ -32,19 +32,28 @@
 - **Remote:** A remote is a named reference to another Git repository. When you create a repo, Git creates a remote named origin that is the default remote for push and pull operations.
 - **Commands, subcommands, and options:** Git operations are performed by using commands like git push and git pull. git is the command, and push or pull is the subcommand. The subcommand specifies the operation you want Git to perform. Commands frequently are accompanied by options, which use hyphens (-) or double hyphens (--). For example, git reset --hard.
 
-# config 
+# checking git version
+```
+git --version
+```
+
+# configure git
 
 ```
 git config --global user.name "<USER_NAME>"
 git config --global user.email "<USER_EMAIL>"
 git config --list
-user.name=User Name
-user.email=user-name@contoso.com
+```
+
+# make a directory
+
+```
+mkdir [insert directory_name]
+cd [directory_name] # to navigate to directory
 ```
 
 # initialize repo 
 initialize your new repository and set the name of the default branch to main:
-
 
 ```
 git init --initial-branch=main
@@ -64,6 +73,7 @@ git status
 ```
 ls -la
 ```
+you should ensure that there is a subdirectory named `.git` here 
 
 **git status**
 Git status displays the state of the working tree (and of the staging area. It lets you see which changes are currently being tracked by Git, so you can decide whether you want to ask Git to take another snapshot.
@@ -79,6 +89,124 @@ Commit is both a verb and a noun. It has essentially the same meaning as when yo
 
 **git log**
 The git log command allows you to see information about previous commits. Each commit has a message attached to it (a commit message), and the git log command prints information about the most recent commits, like their time stamp, the author, and a commit message. This command helps you keep track of what you've been doing and what changes have been saved.
+
+# modifying a file
+after modifying a file
+
+# see what's changed with git diff
+```
+git diff
+git diff HEAD^ 
+```
+will produce output if the working tree, index and head are NOT in agreement
+
+# modifying .gitignore
+```
+code .gitignore
+```
+
+add following to file to instruct Git to ignore files that have file names ending in .bak or ~.
+
+```
+*.bak
+*~
+```
+
+# create subdirectory
+note that Git does not consider adding an empty directory to be a change 
+this is because GIT tracks only changes to files, not changes to directories 
+sometiems you want an empty directory as a placeholder, so you can create an empty file often called
+`.git-keep` in a placeholder directory 
+
+```
+touch CSS/.git-keep
+git add CSS
+```
+
+# see list of commits 
+```
+git log --oneline
+```
+
+# recovering a deleted file
+1. delete a file
+```
+rm file.html
+```
+2. use an `ls` command to verify that file.html was deleted
+```
+ls
+```
+3. recover the file
+```
+git checkout -- file.html
+```
+
+# practice recovering a file that was deleted: git rm
+
+```
+git rm file.html
+```
+when you use git rm - it deletes the file but also records the deletion in the index
+so you have to unstage the deletion with
+```
+git reset HEAD file.html
+```
+and recover 
+```
+git chekcout -- file.html
+```
+
+# reverting a commit 
+see only the most recent commit entry
+```
+git log -n1
+```
+use git revert to undo your committed changes
+```
+git revert --no-edit HEAD
+```
+`--no-edit` flag tells Git we don't want to add a commit message for this action
+
+
+# clone a repository (git clone)
+```
+git clone
+```
+
+# remote repositories (git pull)
+- when git clones a repo, it creates a ref to the original repo that's called a _remote_ by using the name origin
+- it sets up the cloned repo so that the clone will _pull_ or retrieve data from the _remote_, it is very efficient because it only copies the new commits and objects from the remote and then checks them into your working tree
+- `git pull` is a combination of two simpler operations `git fetch` and `git merge`
+
+# create pull requests (git request-pull)
+you submit a pull request to ask owner of the repo to pull changes into the main code base 
+
+```
+git request-pull -p origin/main .
+``` 
+
+# complete pull request
+- to complete the pull you have to set up a remote by using the `git remote` command 
+
+# telling git which remote branch to track
+```
+git branch --set-upstream-to origin/main
+```
+
+
+# git stash and pop
+- when you pull changes before committing your own
+**Please commit your changes or stash them before you can merge.**
+- git warning that the pull will overwrite your version of a file, because someone else modified the same file
+- lets assume the file was `index.html` where both people made changes
+
+1. use `git diff origin -- index.html`
+2. check that changes don't overlap
+3. `git stash` to save the state of the working tree and index by making a couple temporary commits (ie, saving your work while you do something else) without making a real commit or affecting your repository history
+4. (you should stash or commit before pulling)
+5. now it is safe to pull  (In fact, git stash is shorthand for git stash push. It's a lot like the stack where you put bills that you haven't gotten around to paying yet.) so run `git pull` and then `git stash pop`
+6. Popping the stash merges the changes. If changes overlap, there might be a conflict. 
 
 # branches
 
