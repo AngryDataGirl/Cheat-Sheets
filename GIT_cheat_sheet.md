@@ -206,7 +206,26 @@ git branch --set-upstream-to origin/main
 3. `git stash` to save the state of the working tree and index by making a couple temporary commits (ie, saving your work while you do something else) without making a real commit or affecting your repository history
 4. (you should stash or commit before pulling)
 5. now it is safe to pull  (In fact, git stash is shorthand for git stash push. It's a lot like the stack where you put bills that you haven't gotten around to paying yet.) so run `git pull` and then `git stash pop`
-6. Popping the stash merges the changes. If changes overlap, there might be a conflict. 
+6. Popping the stash merges the changes. If changes overlap, there might be a conflict.
+
+# merge branches (git merge)
+
+# Switch back to the main branch
+```git checkout main```
+
+# Merge my-feature branch into main
+```git merge my-feature```
+
+# addressing merge conflicts
+few options:
+- `git merge --abort` to restore the main branch to what it was before the merge , run `git pull` to get latest changes, create a new branch, make their changes and merge their breanch into the main branch
+- `git reset --hard` to get back to where they were before they started the merge
+- resolve conflict manually by using information git inserts into the affected files (preferred)
+  - resolve manually in file, save file and then run following commands to commit the change
+```
+git add x
+git commit -a -m "fix conflict"
+git push 
 
 # branches
 
