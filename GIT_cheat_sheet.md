@@ -83,12 +83,16 @@ Create the gitignore file.
 ```
 code .gitignore
 ```
-add following to file to instruct Git to ignore files that have file names ending in .bak or ~.
-
+in the .gitignore file :
 ```
+# to ignore files that have file names ending in .bak or ~.
 *.bak
 *~
+
+# to ignore an entire directory 
+dir_to_ignore/
 ```
+
 instead of .gitignore -- just exclude for yourself, update it in that file 
 
 ```
