@@ -13,7 +13,7 @@
 3. python
   4. [saspy](saspy.md)
   5. [sqlalchemy](SQLALCHEMY_cheat_sheet.md)
-  6. pandas
+  6. [pandas](PANDAS.md)
 7. [sas](SAS_cheat_sheet.md)
 
 ## Concepts 
