@@ -33,6 +33,11 @@ df.to_csv(file_name, sep='\t')
 ```python
 df.to_csv(file_name, sep='\t', encoding='utf-8')
 ```
+# summary info
+
+```python
+df.info(), df.head(), df.shape, df.dtypes
+```
 
 # column manipulation 
 
