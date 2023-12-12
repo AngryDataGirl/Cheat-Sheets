@@ -33,6 +33,13 @@ df.to_csv(file_name, sep='\t')
 ```python
 df.to_csv(file_name, sep='\t', encoding='utf-8')
 ```
+
+# remove display limit
+
+```python
+pd.set_option("display.max_rows", None, "display.max_columns", None)
+```
+
 # summary info
 
 ```python
