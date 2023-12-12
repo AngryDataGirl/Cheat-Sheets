@@ -1,10 +1,30 @@
 # Pandas Cheat Sheet
 
-# selecting multiple columns
+# CSV
+## read csv
+```python
+df = pd.read_csv('filename.csv')
+```
+## read csv with specific separator
+```python
+df = pd.read_csv("data2.csv", sep='|')
+```
+## write csv
+```python
+df.to_csv(file_name, sep='\t')
+```
+## write csv with specific encoding 
+```python
+df.to_csv(file_name, sep='\t', encoding='utf-8')
+```
+
+# column manipulation 
+
+## selecting multiple columns
 ```python
 df1 = df[['a', 'b']]
 ```
-# selecting multiple columns through slice 
+## selecting multiple columns through slice 
 ```python
 # Remember, Python is zero-offset! The "third" entry is at slot two.
 newdf = df[df.columns[2:4]]
@@ -13,6 +33,67 @@ newdf = df[df.columns[2:4]]
 columns = ['b', 'c']
 df1 = pd.DataFrame(df, columns=columns)
 ```
+### selecting columns with columns list / subset of list 
+1. where df is the dataframe and lst is the lst of columns 
+```python
+(df.columns.intersection(lst))
+```
+or 
+```python
+df[df.columns & lst]
+```
+2. list comprehension
+
+```python
+ df[[c for c in df.columns if c in lst]]
+```
+
+# filtering
+
+## testing if column meets certain condition
+```python
+df['indicator'] = df[columns].ne(0).any(axis=1)
+```
+## filtering out NAN or Nulls
+```python
+filtered_df = df[df['a'].notnull()]
+```
+## filtering out NAN from multiple columns
+```python
+filtered_df = df[df[['a', 'b', 'c']].notnull().all(1)]
+```
+## dropping columns with NAN or nulls with threshold
+- ie, if threshold 2 then all rows with at least 2 NAN or nulls will get dropped 
+```python
+df.dropna(thresh=2)
+```
+
+# aggregation 
+
+## counting specific values acrossc multiple columns
+
+```python
+df[df == 'x'].count()
+```
+
+## pivot table
+- note that equivalent to SUM (CASE WHEN) in SQL 
+```python
+ df1=pd.pivot_table(df, index=['x','y'],values=['a','b','c'],aggfunc=np.sum)
+```
+
+## conditional sum & group by 
+https://stackoverflow.com/questions/17266129/conditional-sum-with-groupby
+
+```python
+# First groupby the key1 column:
+g = df.groupby('key1')
+
+# and then for each group take the subDataFrame where key2 equals 'one' and sum the data1 column:
+g.apply(lambda x: x[x['key2'] == 'one']['data1'].sum())
+```
+
+# dataframe manipulation
 # df.merge()
 
 ```python
