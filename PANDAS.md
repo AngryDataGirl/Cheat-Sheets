@@ -1,6 +1,22 @@
 # Pandas Cheat Sheet
 
 # CSV
+
+## example snippet
+```python
+import pandas as pd
+import numpy as np
+import os
+
+# See current directory
+print(os.getcwd())
+
+# Provide the new path here
+os.chdir('C:\\Users\\USERNAME\\Downloads')  
+
+# read csv 
+df = pd.read_csv('test.csv',low_memory=False) # low memory will help with super large dataframes and datatype conversion errors 
+```
 ## read csv
 ```python
 df = pd.read_csv('filename.csv')
