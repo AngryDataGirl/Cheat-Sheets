@@ -45,6 +45,16 @@ pd.set_option("display.max_rows", None, "display.max_columns", None)
 ```python
 df.info(), df.head(), df.shape, df.dtypes
 ```
+# row manipulation
+
+## remove top row
+```python
+df.columns = df.iloc[0]
+```
+you can also pass it to header when reading csv like this 
+```python
+df = pd.read_csv("Prices.csv", header=0)
+```
 
 # column manipulation 
 
