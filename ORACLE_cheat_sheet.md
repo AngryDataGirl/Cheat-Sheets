@@ -19,11 +19,16 @@
 SELECT sys_context('USERENV','SERVER_HOST') FROM dual
 ```
 
+
 # Find Oracle service name
 Helpful for trying to find the connection information required to set up other connections (ie, through python) or some dashboard software like POWER BI.
 
 ```sql
 select * from global_name;
+
+-- or
+
+select value from v$parameter where name='service_names'
 ```
 
 # Tables
