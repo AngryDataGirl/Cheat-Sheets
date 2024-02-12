@@ -457,3 +457,20 @@ begin
 end;
 ```
 
+## Loop for unioning t ables
+
+```sql
+CREATE OR REPLACE PROCEDURE UNION_TABLES
+IS 
+BEGIN
+  FOR rec IN
+    (SELECT table_name FROM user_tables WHERE table_name LIKE '%TEST_COLUMN%')
+  LOOP
+    EXECUTE immediate 'DROP TABLE  '||rec.table_name;
+  END LOOP;
+END;
+
+EXECUTE DROP_TESTING_TABLES;
+
+SELECT 'SELECT * FROM '||table_name||' UNION ALL' FROM user_tables WHERE table_name LIKE '%TEST_COLUMN%'
+```
