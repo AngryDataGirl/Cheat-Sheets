@@ -6,6 +6,7 @@
 - [Structure and config](#structure-and-config)
   - [Where to save singular tests](#where-to-save-singular-tests) 
   - [Defining custom test names](#defining-custom-test-names)
+- [Creating tests]
 - [Notes on creating macros](#notes-on-creating-macros)
   - [Printing output](#printing-output) 
   - [Accessing models or context items through the graph node](#accessing-models-or-context-items-through-the-graph-node) 
@@ -78,6 +79,37 @@ models:
               values: ['placed', 'shipped', 'completed', 'returned']
               config:
                 where: "order_date = current_date"
+```
+
+# Creating tests
+
+generic test config bloc
+```SQL
+{% test column_exists(model, column_name) %}
+
+SELECT table_name, column_name, data_type, data_length
+FROM USER_TAB_COLUMNS
+WHERE table_name = '{{model}}'
+AND column_name = '{{column_name}}'
+
+{% endtest %}
+```
+
+## Storing test failures
+
+[Tests | dbt Developer Hub (getdbt.com)](https://docs.getdbt.com/docs/build/tests#storing-test-failures)
+
+[store_failures | dbt Developer Hub (getdbt.com)](https://docs.getdbt.com/reference/resource-configs/store_failures#description)
+
+Normally, a test query will calculate failures as part of its execution. If you set the optional `--store-failures` flag or `[store_failures` config](https://docs.getdbt.com/reference/resource-configs/store_failures), dbt will first save the results of a test query to a table in the database, and then query that table to calculate the number of failures.
+
+This workflow allows you to query and examine failing records much more quickly in development
+
+add this block to the yml to globally store failures
+```yaml
+tests:
+  +store_failures: true
+  +schema: the_island_of_misfit_tests
 ```
 
 # Notes on creating macros 
